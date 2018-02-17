@@ -1,7 +1,7 @@
 {
-    "name": "430-Project1",
+    "name": "http-api-assignment-ii",
     "version": "1.0.0",
-    "description": "430-Project1",
+    "description": "http api assignment part 2",
     "main": "./src/server.js",
     "scripts": {
         "start": "node ./src/server.js",
@@ -10,7 +10,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/gmk1072/430project1.git"
+        "url": "git+https://github.com/gmk1072/http-api-assignment-ii.git"
     },
     "author": "Gavin Keirstead",
     "license": "ISC",
