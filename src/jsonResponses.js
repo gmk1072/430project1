@@ -1,4 +1,4 @@
-const users = {};
+const characters = {};
 
 const respondJSON = (request, response, status, object) => {
   const headers = {
@@ -19,15 +19,15 @@ const respondJSONMeta = (request, response, status) => {
   response.end();
 };
 
-const getUsers = (request, response) => {
+const getCharacterList = (request, response) => {
   const responseJSON = {
-    users,
+    characters,
   };
 
   return respondJSON(request, response, 200, responseJSON);
 };
 
-const getUsersMeta = (request, response) => respondJSONMeta(request, response, 200);
+const getCharacterListMeta = (request, response) => respondJSONMeta(request, response, 200);
 
 
 const notFound = (request, response) => {
@@ -43,24 +43,24 @@ const notFoundMeta = (request, response) => {
   respondJSONMeta(request, response, 404);
 };
 
-const addUser = (request, response, body) => {
+const addCharacter = (request, response, body) => {
   const responseJSON = {
-    message: 'Name and Age are required',
+    message: 'Player Name is Required',
   };
 
-  if (!body.name || !body.age) {
+  if (!body.name) {
     responseJSON.id = 'missingParams';
     return respondJSON(request, response, 400, responseJSON);
   }
   let responseCode = 201;
-  if (users[body.name]) {
+  if (characters[body.name]) {
     responseCode = 204;
   } else {
-    users[body.name] = {};
+    characters[body.name] = {};
   }
 
-  users[body.name].name = body.name;
-  users[body.name].age = body.age;
+  characters[body.name].name = body.name;
+  // characters[body.name].age = body.age;
 
   if (responseCode === 201) {
     responseJSON.message = 'Created successfully';
@@ -71,9 +71,9 @@ const addUser = (request, response, body) => {
 };
 
 module.exports = {
-  getUsers,
-  getUsersMeta,
-  addUser,
+  getCharacterList,
+  getCharacterListMeta,
+  addCharacter,
   notFound,
   notFoundMeta,
 };

@@ -7,7 +7,7 @@ const jsonHandler = require('./jsonResponses.js');
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const handlePost = (request, response, parsedUrl) => {
-  if (parsedUrl.pathname === '/addUser') {
+  if (parsedUrl.pathname === '/addCharacter') {
     const res = response;
 
     const body = [];
@@ -26,7 +26,7 @@ const handlePost = (request, response, parsedUrl) => {
       const bodyString = Buffer.concat(body).toString();
       const bodyParams = query.parse(bodyString);
 
-      jsonHandler.addUser(request, res, bodyParams);
+      jsonHandler.addCharacter(request, res, bodyParams);
     });
   }
 };
@@ -36,16 +36,18 @@ const handleGet = (request, response, parsedUrl) => {
     htmlHandler.getIndex(request, response);
   } else if (parsedUrl.pathname === '/style.css') {
     htmlHandler.getCSS(request, response);
-  } else if (parsedUrl.pathname === '/getUsers') {
-    jsonHandler.getUsers(request, response);
+  } else if (parsedUrl.pathname === '/bundle.js') {
+    htmlHandler.getBundle(request, response);
+  } else if (parsedUrl.pathname === '/getCharacterList') {
+    jsonHandler.getCharacterList(request, response);
   } else {
     jsonHandler.notFound(request, response);
   }
 };
 
 const handleHead = (request, response, parsedUrl) => {
-  if (parsedUrl.pathname === '/getUsers') {
-    jsonHandler.getUsersMeta(request, response);
+  if (parsedUrl.pathname === '/getCharacterList') {
+    jsonHandler.getCharacterListMeta(request, response);
   } else { jsonHandler.notFoundMeta(request, response); }
 };
 

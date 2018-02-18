@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Our simple HTTP server</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/style.css">
+
+        <script src="./bundle.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+            <div class="navbar-brand col-sm-3 col-d-2 mr-0">D&D Character Storage</div>
+            <ul class="navbar-nav px-3"><li class="nav-item text-nowrap" > <div class="nav-link" id="statusCode"></div></li></ul>
+        </nav>
+        <div class="container-fluid border-primary">
+            <div class="row">
+                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                    <div class="sidebar-sticky">
+                        <ul class="nav flex-column" style="margin-top:3px;">
+                            <li class="nav-item"><button class="btn btn-dark btn-sm" data-toggle="collapse" href="#addCharacterCollapse" role="button" aria-expanded="false" aria-controls="addCharacterCollapse">Add a Character</button></li>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="collapse" id="addCharacterCollapse">
+                                        <div class="card card-body">
+                                            <form id="nameForm" action="/addCharacter" method="post">
+                                                <div class="form-group">
+                                                    <label for="characterName">Enter a name for you character</label>
+                                                    <input type="text" class="form-control" name="name" id="nameField" aria-describedby="characterName" placeholder="Ex:John Smith">
+                                                    <button type="submit" class="btn btn-dark" data-toggle="collapse" data-target="#addCharacterCollapse" aria-expanded="false" aria-controls="addCharacterCollapse" value="Add Character">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            Character List
+                            <form id="refreshCharacterListForm" action="/getCharacterList" method="get">
+                                <button class="btn btn-dark btn-sm" id="refreshCharacterList" type="submit"><i class="material-icons">refresh</i></button>
+                            </form>
+                        </h6>
+                        <ul class="nav flex-column mb-2" id="characterList">
+                        </ul>
+                    </div>
+                </nav>
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">Wassup</div>
+                </main>
+            </div>
+        </div>
+
+        <!-- <section id="top">
+<h3>POST Status Code Tests</h3>
+<form id="nameForm" action="/addCharacter" method="post">
+<label for="name">Name: </label>
+<input id="nameField" type="text" name="name" />
+<input type="submit" value="Add Character" />
+</form>
+<form id="characterForm" action="/getCharacterList" method="get">
+<select id='urlField'>
+<option value='/getCharacterList'>/getCharacterList</option>
+<option value='/notReal'>/notReal</option>
+</select>
+<select id="methodSelect">
+<option value="get">GET</option>
+<option value="head">HEAD</option>
+</select>
+<input type="submit" value="Get Character" />
+</form>
+</section>
+<section id="content">
+</section>-->
+
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
+</html>

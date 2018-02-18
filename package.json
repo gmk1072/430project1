@@ -6,7 +6,10 @@
     "scripts": {
         "start": "node ./src/server.js",
         "pretest": "eslint ./src --fix",
-        "test": "echo \"Tests complete\""
+        "test": "echo \"Tests complete\"",
+        "nodemon": "nodemon --watch ./src ./src/server.js",
+        "build": "babel ./client --out-file ./hosted/bundle.js",
+        "watch": "babel --watch ./client --out-file ./hosted/bundle.js"
     },
     "repository": {
         "type": "git",
@@ -15,12 +18,15 @@
     "author": "Gavin Keirstead",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/gmk1072/http-api-assignment-ii/issues"
+        "url": "https://github.com/gmk1072/430project1/issues"
     },
-    "homepage": "https://github.com/gmk1072/http-api-assignment-ii#readme",
+    "homepage": "https://github.com/gmk1072/430project1#readme",
     "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.6.1",
         "eslint": "^4.17.0",
         "eslint-config-airbnb": "^16.1.0",
-        "eslint-plugin-import": "^2.8.0"
+        "eslint-plugin-import": "^2.8.0",
+        "nodemon": "^1.15.0"
     }
 }
