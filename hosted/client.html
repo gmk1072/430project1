@@ -49,8 +49,25 @@
                         </ul>
                     </div>
                 </nav>
-                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">Wassup</div>
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" id="main">
+                    <form id="saveCharacter" action="/saveCharacter" method="post">
+                        <input id="name" type="text" class="form-control" name="name" aria-describedby="characterName" readonly>
+                        <input id="race" type="text" class="form-control" name="race" aria-describedby="characterRace">
+                        <input id="str" type="text" class="form-control" name="str" aria-describedby="characterStr">
+                        <input id="dex" type="text" class="form-control" name="dex" aria-describedby="characterDex">
+                        <input id="con" type="text" class="form-control" name="con" aria-describedby="characterCon">
+                        <input id="int" type="text" class="form-control" name="int" aria-describedby="characterInt">
+                        <input id="wis" type="text" class="form-control" name="wis" aria-describedby="characterWis">
+                        <input id="cha" type="text" class="form-control" name="cha" aria-describedby="characterCha">
+                        <button type ="submit" class="btn btn-primary" value="Save Character">Save</button>
+                        <div id="saveModal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="saveNotification" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-body">Your character has been saved!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </main>
             </div>
         </div>

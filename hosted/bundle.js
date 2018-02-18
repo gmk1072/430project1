@@ -1,6 +1,7 @@
 "use strict";
 
 var parseJSON = function parseJSON(xhr, e) {
+    console.log(xhr.response);
     var obj = JSON.parse(xhr.response);
     //console.dir(obj);
 
@@ -19,8 +20,7 @@ var parseJSON = function parseJSON(xhr, e) {
             var li = document.createElement("li");
             li.className = "nav-item";
             var form1 = document.createElement("form");
-            form1.setAttribute('action', "/showCharacter?name=" + characters[key].name);
-            //form1.action = `/showCharacter?name=${characters[key].name}`;
+            form1.action = "/showCharacter?name=" + characters[key].name;
             console.log(form1.action);
             form1.method = "get";
             var showCharacter = function showCharacter(e) {
@@ -31,7 +31,8 @@ var parseJSON = function parseJSON(xhr, e) {
             button.className = "btn-outline-secondary btn btn-sm margin3px";
             button.type = "submit";
             button.innerHTML = characters[key].name;
-            li.appendChild(button);
+            form1.appendChild(button);
+            li.appendChild(form1);
             charachterList.appendChild(li);
         };
 
@@ -39,31 +40,43 @@ var parseJSON = function parseJSON(xhr, e) {
             _loop();
         }
     }
+    if (obj.id) {
+        switch (obj.id) {
+            case "showCharacter":
+                {
+                    document.querySelector("#name").value = obj.name;
+                    document.querySelector("#race").value = obj.race == undefined ? "" : obj.race;
+                    document.querySelector("#str").value = obj.str == undefined ? "" : obj.str;
+                    document.querySelector("#dex").value = obj.dex == undefined ? "" : obj.dex;
+                    document.querySelector("#con").value = obj.con == undefined ? "" : obj.con;
+                    document.querySelector("#int").value = obj.int == undefined ? "" : obj.int;
+                    document.querySelector("#wis").value = obj.wis == undefined ? "" : obj.wis;
+                    document.querySelector("#cha").value = obj.cha == undefined ? "" : obj.cha;
+                    break;
+                }
+        }
+    }
 };
 
 var handleResponse = function handleResponse(xhr, parseResponse, e) {
     var statusCode = document.querySelector("#statusCode");
     statusCode.innerHTML = xhr.status;
-    /*const content = document.querySelector('#content');
-    switch(xhr.status) {
+    switch (xhr.status) {
         case 200:
-            content.innerHTML = `<b>Success</b>`;
             break;
         case 201:
-            content.innerHTML = `<b>Created</b>`;
             break;
         case 204:
-            content.innerHTML = `<b>Updated (no content)</b>`;
+            var modal = document.querySelector("#saveModal");
+            $('#saveModal').modal("show");
             return;
         case 400:
-            content.innerHTML = `<b>Bad Request</b>`;
             break;
         case 404:
-            content.innerHTML = `<b>Resource Not Found</b>`;
             break;
         default:
-            content.innerHTML = `Error code not implemented by client`;
-    }*/
+            content.innerHTML = "Error code not implemented by client";
+    }
     if (parseResponse) {
         parseJSON(xhr, e);
     }
@@ -71,7 +84,7 @@ var handleResponse = function handleResponse(xhr, parseResponse, e) {
 var requestUpdate = function requestUpdate(e, characterForm) {
     var url = characterForm.getAttribute('action');
     var method = characterForm.getAttribute('method');
-
+    console.log(url);
     var xhr = new XMLHttpRequest();
 
     xhr.open(method, url);
@@ -132,6 +145,12 @@ var init = function init() {
         return sendPost(e, nameForm);
     };
     nameForm.addEventListener('submit', addCharacter);
+
+    var saveForm = document.querySelector("#saveCharacter");
+    var saveCharacter = function saveCharacter(e) {
+        return sendPost(e, saveForm);
+    };
+    saveForm.addEventListener('submit', saveCharacter);
 };
 
 window.onload = init;
