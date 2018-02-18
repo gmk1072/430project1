@@ -1,7 +1,7 @@
 
-const parseJSON = (xhr) => {
+const parseJSON = (xhr,e) => {
     const obj = JSON.parse(xhr.response);
-    console.dir(obj);
+    //console.dir(obj);
 
     /*if(obj.message) {
         const p = document.createElement('p');
@@ -16,9 +16,16 @@ const parseJSON = (xhr) => {
         for (var key in characters) {
             const li = document.createElement("li");
             li.className = "nav-item";
+            const form1 = document.createElement("form");
+            form1.setAttribute('action', `/showCharacter?name=${characters[key].name}`);
+            //form1.action = `/showCharacter?name=${characters[key].name}`;
+            console.log(form1.action);
+            form1.method = "get";
+            const showCharacter = (e) => requestUpdate(e, form1);
+            form1.addEventListener("submit", showCharacter);
             const button = document.createElement("button");
             button.className = "btn-outline-secondary btn btn-sm margin3px";
-            button.href = characters[key].name;
+            button.type = "submit";
             button.innerHTML = characters[key].name;
             li.appendChild(button);
             charachterList.appendChild(li);
@@ -26,7 +33,7 @@ const parseJSON = (xhr) => {
     }
 };
 
-const handleResponse = (xhr, parseResponse) => {
+const handleResponse = (xhr, parseResponse, e) => {
     const statusCode = document.querySelector("#statusCode");
     statusCode.innerHTML = xhr.status;
     /*const content = document.querySelector('#content');
@@ -50,7 +57,7 @@ const handleResponse = (xhr, parseResponse) => {
             content.innerHTML = `Error code not implemented by client`;
     }*/
     if (parseResponse) {
-        parseJSON(xhr);
+        parseJSON(xhr, e);
     }
 };
 const requestUpdate = (e, characterForm) =>{
@@ -64,9 +71,9 @@ const requestUpdate = (e, characterForm) =>{
     xhr.setRequestHeader('Accept', 'application/json');
 
     if(method == 'get') {
-        xhr.onload = () => handleResponse(xhr, true);
+        xhr.onload = () => handleResponse(xhr, true, e);
     } else {
-        xhr.onload = () => handleResponse(xhr,false);
+        xhr.onload = () => handleResponse(xhr,false, e);
     }
 
     xhr.send();
@@ -78,7 +85,7 @@ const requestUpdate = (e, characterForm) =>{
 const sendPost = (e, nameForm) => {
     const nameAction = nameForm.getAttribute('action');
     const nameMethod = nameForm.getAttribute('method');
-    const nameField = nameForm.querySelector('#nameField');
+    const fields = nameForm.getElementsByTagName("input");
 
     const xhr = new XMLHttpRequest();
 
@@ -87,8 +94,12 @@ const sendPost = (e, nameForm) => {
     xhr.setRequestHeader('Accept', 'application/json');
 
     xhr.onload = () => handleResponse(xhr,true);
-
-    const formData = `name=${nameField.value}`;
+    let formData = ``;
+    for (var i = 0; i < fields.length ; i++) {
+        if(formData != ``)
+            formData = `${formData}&`;
+        formData = `${formData}${fields[i].name}=${fields[i].value}`;
+    }
     xhr.send(formData);
 
     e.preventDefault();

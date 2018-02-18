@@ -1,8 +1,8 @@
 "use strict";
 
-var parseJSON = function parseJSON(xhr) {
+var parseJSON = function parseJSON(xhr, e) {
     var obj = JSON.parse(xhr.response);
-    console.dir(obj);
+    //console.dir(obj);
 
     /*if(obj.message) {
         const p = document.createElement('p');
@@ -14,20 +14,34 @@ var parseJSON = function parseJSON(xhr) {
         var charachterList = document.querySelector("#characterList");
         var characters = obj.characters;
         charachterList.innerHTML = "";
-        for (var key in characters) {
+
+        var _loop = function _loop() {
             var li = document.createElement("li");
             li.className = "nav-item";
+            var form1 = document.createElement("form");
+            form1.setAttribute('action', "/showCharacter?name=" + characters[key].name);
+            //form1.action = `/showCharacter?name=${characters[key].name}`;
+            console.log(form1.action);
+            form1.method = "get";
+            var showCharacter = function showCharacter(e) {
+                return requestUpdate(e, form1);
+            };
+            form1.addEventListener("submit", showCharacter);
             var button = document.createElement("button");
             button.className = "btn-outline-secondary btn btn-sm margin3px";
-            button.href = characters[key].name;
+            button.type = "submit";
             button.innerHTML = characters[key].name;
             li.appendChild(button);
             charachterList.appendChild(li);
+        };
+
+        for (var key in characters) {
+            _loop();
         }
     }
 };
 
-var handleResponse = function handleResponse(xhr, parseResponse) {
+var handleResponse = function handleResponse(xhr, parseResponse, e) {
     var statusCode = document.querySelector("#statusCode");
     statusCode.innerHTML = xhr.status;
     /*const content = document.querySelector('#content');
@@ -51,7 +65,7 @@ var handleResponse = function handleResponse(xhr, parseResponse) {
             content.innerHTML = `Error code not implemented by client`;
     }*/
     if (parseResponse) {
-        parseJSON(xhr);
+        parseJSON(xhr, e);
     }
 };
 var requestUpdate = function requestUpdate(e, characterForm) {
@@ -66,11 +80,11 @@ var requestUpdate = function requestUpdate(e, characterForm) {
 
     if (method == 'get') {
         xhr.onload = function () {
-            return handleResponse(xhr, true);
+            return handleResponse(xhr, true, e);
         };
     } else {
         xhr.onload = function () {
-            return handleResponse(xhr, false);
+            return handleResponse(xhr, false, e);
         };
     }
 
@@ -83,7 +97,7 @@ var requestUpdate = function requestUpdate(e, characterForm) {
 var sendPost = function sendPost(e, nameForm) {
     var nameAction = nameForm.getAttribute('action');
     var nameMethod = nameForm.getAttribute('method');
-    var nameField = nameForm.querySelector('#nameField');
+    var fields = nameForm.getElementsByTagName("input");
 
     var xhr = new XMLHttpRequest();
 
@@ -94,8 +108,11 @@ var sendPost = function sendPost(e, nameForm) {
     xhr.onload = function () {
         return handleResponse(xhr, true);
     };
-
-    var formData = "name=" + nameField.value;
+    var formData = "";
+    for (var i = 0; i < fields.length; i++) {
+        if (formData != "") formData = formData + "&";
+        formData = "" + formData + fields[i].name + "=" + fields[i].value;
+    }
     xhr.send(formData);
 
     e.preventDefault();
