@@ -5,7 +5,11 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/style.css">
-
+        <style>
+            .margin3px {
+                margin: 3px;
+            }
+        </style>
         <script src="./bundle.js"></script>
     </head>
     <body>
@@ -17,7 +21,7 @@
             <div class="row">
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                     <div class="sidebar-sticky">
-                        <ul class="nav flex-column" style="margin-top:3px;">
+                        <ul class="nav flex-column margin3px">
                             <li class="nav-item"><button class="btn btn-dark btn-sm" data-toggle="collapse" href="#addCharacterCollapse" role="button" aria-expanded="false" aria-controls="addCharacterCollapse">Add a Character</button></li>
                             <div class="row">
                                 <div class="col">
@@ -38,7 +42,7 @@
                         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                             Character List
                             <form id="refreshCharacterListForm" action="/getCharacterList" method="get">
-                                <button class="btn btn-dark btn-sm" id="refreshCharacterList" type="submit"><i class="material-icons">refresh</i></button>
+                                <button class="btn btn-dark btn-sm" id="urlField" type="submit"><i class="material-icons">refresh</i></button>
                             </form>
                         </h6>
                         <ul class="nav flex-column mb-2" id="characterList">

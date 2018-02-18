@@ -18,7 +18,7 @@ var parseJSON = function parseJSON(xhr) {
             var li = document.createElement("li");
             li.className = "nav-item";
             var button = document.createElement("button");
-            button.className = "btn-outline-secondary btn btn-sm";
+            button.className = "btn-outline-secondary btn btn-sm margin3px";
             button.href = characters[key].name;
             button.innerHTML = characters[key].name;
             li.appendChild(button);
@@ -55,8 +55,8 @@ var handleResponse = function handleResponse(xhr, parseResponse) {
     }
 };
 var requestUpdate = function requestUpdate(e, characterForm) {
-    var url = characterForm.querySelector('#urlField').value;
-    var method = characterForm.querySelector('#methodSelect').value;
+    var url = characterForm.getAttribute('action');
+    var method = characterForm.getAttribute('method');
 
     var xhr = new XMLHttpRequest();
 

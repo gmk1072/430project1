@@ -17,7 +17,7 @@ const parseJSON = (xhr) => {
             const li = document.createElement("li");
             li.className = "nav-item";
             const button = document.createElement("button");
-            button.className = "btn-outline-secondary btn btn-sm";
+            button.className = "btn-outline-secondary btn btn-sm margin3px";
             button.href = characters[key].name;
             button.innerHTML = characters[key].name;
             li.appendChild(button);
@@ -54,8 +54,8 @@ const handleResponse = (xhr, parseResponse) => {
     }
 };
 const requestUpdate = (e, characterForm) =>{
-    const url = characterForm.querySelector('#urlField').value;
-    const method = characterForm.querySelector('#methodSelect').value;
+    const url = characterForm.getAttribute('action');
+    const method = characterForm.getAttribute('method');
 
     const xhr = new XMLHttpRequest();
 
