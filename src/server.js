@@ -28,19 +28,19 @@ const handlePost = (request, response, parsedUrl) => {
 
             jsonHandler.addCharacter(request, res, bodyParams);
         });
-    } else if(parsedUrl.pathname ==='/saveCharacter') {
+    } else if (parsedUrl.pathname === '/saveCharacter') {
         const res = response;
 
         const body = [];
 
         request.on('error', (err) => {
-           console.dir(err);
+            console.dir(err);
             res.statusCode = 400;
             res.end();
         });
 
         request.on('data', (chunk) => {
-           body.push(chunk);
+            body.push(chunk);
         });
 
         request.on('end', () => {
@@ -61,8 +61,8 @@ const handleGet = (request, response, parsedUrl, params) => {
         htmlHandler.getBundle(request, response);
     } else if (parsedUrl.pathname === '/getCharacterList') {
         jsonHandler.getCharacterList(request, response);
-    } else if (parsedUrl.pathname === '/showCharacter' ){
-        jsonHandler.showCharacter(request,response,params);
+    } else if (parsedUrl.pathname === '/showCharacter') {
+        jsonHandler.showCharacter(request, response, params);
     } else {
         jsonHandler.notFound(request, response);
     }
@@ -74,14 +74,25 @@ const handleHead = (request, response, parsedUrl) => {
     } else { jsonHandler.notFoundMeta(request, response); }
 };
 
+const handleDelete = (request, response, parsedUrl, params) => {
+    if (parsedUrl.pathname === '/deleteCharacter') {
+        jsonHandler.deleteCharacter(request, response, params);
+    } else {
+        jsonHandler.notFound(request, response);
+    }
+};
+
 const onRequest = (request, response) => {
     const parsedUrl = url.parse(request.url);
     const params = query.parse(parsedUrl.query);
-
+    console.log(parsedUrl);
+    console.log(params);
     if (request.method === 'POST') {
         handlePost(request, response, parsedUrl);
     } else if (request.method === 'GET') {
         handleGet(request, response, parsedUrl, params);
+    } else if (request.method === 'DELETE') {
+        handleDelete(request, response, parsedUrl, params);
     } else {
         handleHead(request, response, parsedUrl);
     }
