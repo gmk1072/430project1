@@ -6,7 +6,7 @@ const jsonHandler = require('./jsonResponses.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
-const handlePost = (request, response, parsedUrl) => {
+const handlePost = (request, response, parsedUrl, params) => {
     if (parsedUrl.pathname === '/addCharacter') {
         const res = response;
 
@@ -49,6 +49,8 @@ const handlePost = (request, response, parsedUrl) => {
 
             jsonHandler.saveCharacter(request, res, bodyParams);
         });
+    } else if( parsedUrl.pathname === '/deleteCharacter') {
+        jsonHandler.deleteCharacter(request, response, params);
     }
 };
 
@@ -63,6 +65,8 @@ const handleGet = (request, response, parsedUrl, params) => {
         jsonHandler.getCharacterList(request, response);
     } else if (parsedUrl.pathname === '/showCharacter') {
         jsonHandler.showCharacter(request, response, params);
+    } else if (parsedUrl.pathname === '/deleteCharacter') {
+        jsonHandler.deleteCharacter(request, response, params);
     } else {
         jsonHandler.notFound(request, response);
     }
@@ -85,14 +89,10 @@ const handleDelete = (request, response, parsedUrl, params) => {
 const onRequest = (request, response) => {
     const parsedUrl = url.parse(request.url);
     const params = query.parse(parsedUrl.query);
-    console.log(parsedUrl);
-    console.log(params);
     if (request.method === 'POST') {
-        handlePost(request, response, parsedUrl);
+        handlePost(request, response, parsedUrl, params);
     } else if (request.method === 'GET') {
         handleGet(request, response, parsedUrl, params);
-    } else if (request.method === 'DELETE') {
-        handleDelete(request, response, parsedUrl, params);
     } else {
         handleHead(request, response, parsedUrl);
     }

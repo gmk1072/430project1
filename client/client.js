@@ -33,8 +33,8 @@ const parseJSON = (xhr,e) => {
         if(obj.id) {
             switch(obj.id) {
                 case "showCharacter": {
-                    document.querySelector("#deleteCharacter").action = '/deleteCharacter?name=';
-                    document.querySelector("#deleteCharacter").action = `${document.querySelector("#deleteCharacter").action}${obj.name}`;
+                    document.querySelector("#deleteCharacter").action = `/deleteCharacter?name=${obj.name}`;
+                    console.log(document.querySelector("#deleteCharacter").action);
                     document.querySelector("#name").value = obj.name;
                     document.querySelector("#race").value = obj.race===undefined?'':obj.race;
                     document.querySelector("#class").value = obj.class===undefined?'':obj.class;
@@ -62,6 +62,12 @@ const parseJSON = (xhr,e) => {
 
                     document.querySelector("#alignment").value = obj.alignment==undefined?'':obj.alignment;
                     document.querySelector("#background").value = obj.background==undefined?'':obj.background;
+                    document.querySelector("#playerName").value = obj.playerName===undefined?'':obj.playerName;
+                    break;
+                }
+                case "deleteCharacter": {
+                    var modal = document.querySelector("#deleteModal");
+                    $('#deleteModal').modal("hide");
                     break;
                 }
             }
@@ -155,11 +161,10 @@ const sendPost = (e, nameForm) => {
 const sendDelete = (e, deleteForm) => {
     const deleteAction = deleteForm.getAttribute('action');
     const deleteMethod = deleteForm.getAttribute('method');
-    console.log(deleteAction);
     const xhr = new XMLHttpRequest();
 
     xhr.open(deleteMethod, deleteAction);
-    xhr.onload = () => handleResponse(xhr,false);
+    xhr.onload = () => handleResponse(xhr,true);
 }
 
 const init = () => {

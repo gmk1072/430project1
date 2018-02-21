@@ -42,8 +42,8 @@ var parseJSON = function parseJSON(xhr, e) {
             switch (obj.id) {
                 case "showCharacter":
                     {
-                        document.querySelector("#deleteCharacter").action = '/deleteCharacter?name=';
-                        document.querySelector("#deleteCharacter").action = "" + document.querySelector("#deleteCharacter").action + obj.name;
+                        document.querySelector("#deleteCharacter").action = "/deleteCharacter?name=" + obj.name;
+                        console.log(document.querySelector("#deleteCharacter").action);
                         document.querySelector("#name").value = obj.name;
                         document.querySelector("#race").value = obj.race === undefined ? '' : obj.race;
                         document.querySelector("#class").value = obj.class === undefined ? '' : obj.class;
@@ -71,6 +71,13 @@ var parseJSON = function parseJSON(xhr, e) {
 
                         document.querySelector("#alignment").value = obj.alignment == undefined ? '' : obj.alignment;
                         document.querySelector("#background").value = obj.background == undefined ? '' : obj.background;
+                        document.querySelector("#playerName").value = obj.playerName === undefined ? '' : obj.playerName;
+                        break;
+                    }
+                case "deleteCharacter":
+                    {
+                        var modal = document.querySelector("#deleteModal");
+                        $('#deleteModal').modal("hide");
                         break;
                     }
             }
@@ -169,12 +176,11 @@ var sendPost = function sendPost(e, nameForm) {
 var sendDelete = function sendDelete(e, deleteForm) {
     var deleteAction = deleteForm.getAttribute('action');
     var deleteMethod = deleteForm.getAttribute('method');
-    console.log(deleteAction);
     var xhr = new XMLHttpRequest();
 
     xhr.open(deleteMethod, deleteAction);
     xhr.onload = function () {
-        return handleResponse(xhr, false);
+        return handleResponse(xhr, true);
     };
 };
 
