@@ -66,13 +66,48 @@ const parseJSON = (xhr,e) => {
                     break;
                 }
                 case "deleteCharacter": {
-                    var modal = document.querySelector("#deleteModal");
+                    const modal = document.querySelector("#deleteModal");
                     $('#deleteModal').modal("hide");
+                    const refreshList = document.querySelector("#refreshCharacterListForm");
+                    var event = new Event('submit', {});
+                    refreshList.dispatchEvent(event);
+                    resetFields();
                     break;
                 }
             }
         }
     }
+};
+
+const resetFields = () => {
+    document.querySelector("#name").value = '';
+    document.querySelector("#race").value = '';
+    document.querySelector("#class").value = '';
+    document.querySelector("#str").value = '';
+    document.querySelector("#dex").value = '';
+    document.querySelector("#con").value = '';
+    document.querySelector("#int").value = '';
+    document.querySelector("#wis").value = '';
+    document.querySelector("#cha").value = '';
+
+    document.getElementById("acrobatics").checked = false;
+    document.getElementById("animalHandling").checked = false;
+    document.getElementById("arcana").checked = false;
+    document.getElementById("athletics").checked = false;
+    document.getElementById("deception").checked = false;
+    document.getElementById("history").checked = false;
+    document.getElementById("insight").checked = false;
+    document.getElementById("intimidation").checked = false;
+    document.getElementById("nature").checked = false;
+    document.getElementById("performance").checked = false;
+    document.getElementById("persuasion").checked = false;
+    document.getElementById("religion").checked = false;
+    document.getElementById("stealth").checked = false;
+    document.getElementById("survival").checked = false;
+
+    document.querySelector("#alignment").value = '';
+    document.querySelector("#background").value = '';
+    document.querySelector("#playerName").value = '';
 };
 
 const handleResponse = (xhr, parseResponse, e) => {
@@ -163,8 +198,13 @@ const sendDelete = (e, deleteForm) => {
     const deleteMethod = deleteForm.getAttribute('method');
     const xhr = new XMLHttpRequest();
 
-    xhr.open(deleteMethod, deleteAction);
+    xhr.open('DELETE', deleteAction, true);
     xhr.onload = () => handleResponse(xhr,true);
+
+    xhr.send(null);
+
+    e.preventDefault();
+    return false;
 }
 
 const init = () => {
