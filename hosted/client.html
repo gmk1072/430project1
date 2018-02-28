@@ -31,7 +31,7 @@
                                                 <div class="form-group">
                                                     <label for="characterName">Enter a name for you character</label>
                                                     <input type="text" class="form-control" name="name" id="nameField" aria-describedby="characterName" placeholder="Ex:John Smith">
-                                                    <button type="submit" class="btn btn-dark" data-toggle="collapse" data-target="#addCharacterCollapse" aria-expanded="false" aria-controls="addCharacterCollapse" value="Add Character">Submit</button>
+                                                    <button type="submit" class="btn btn-dark" data-toggle="collapse" data-target="#addCharacterCollapse" aria-expanded="false" aria-controls="addCharacterCollapse" value="Add Character" id="addCharacterButton">Submit</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -39,12 +39,12 @@
                                 </div>
                             </div>
                         </ul>
-                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                            Character List
-                            <form id="refreshCharacterListForm" action="/getCharacterList" method="get">
-                                <button class="btn btn-dark btn-sm" id="urlField" type="submit"><i class="material-icons">refresh</i></button>
-                            </form>
-                        </h6>
+                        <form id="refreshCharacterListForm" action="/getCharacterList" method="get">
+                            <div class="input-group-prepend">
+                                <h6 class="sidebar-heading input-group-text">Character List</h6>
+                                <button class="btn btn-dark btn-xs" id="urlField" type="submit"><i class="material-icons">refresh</i></button>
+                            </div>
+                        </form>
                         <ul class="nav flex-column mb-2" id="characterList">
                         </ul>
                     </div>
@@ -64,13 +64,13 @@
                         <div class="container">
                             <div class="row">
                                 <div class="input-group-prepend col-4">
-                                    <span class="input-group-text col-3">
+                                    <span class="input-group-text text-light bg-dark col-3">
                                         Name
                                     </span>
                                     <input id="name" type="text" class="form-control col-9" name="name" aria-describedby="characterName" readonly>
                                 </div>
                                 <div class="input-group-prepend col-4">
-                                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Race</button>
+                                    <button class="btn dropdown-toggle btn-dark" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Race</button>
                                     <div class="dropdown-menu">
                                         <button class="dropdown-item dropdownInput" target="#race" value="Aarakocra" type="button">Aarakocra</button>
                                         <button class="dropdown-item dropdownInput" target="#race" value="Aasimar" type="button">Aasimar</button>
@@ -102,7 +102,7 @@
                                     <input id="race" type="text" class="form-control" name="race" aria-describedby="characterRace">
                                 </div>
                                 <div class="input-group-prepend col-4">
-                                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Class</button>
+                                    <button class="btn dropdown-toggle btn-dark" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Class</button>
                                     <div class="dropdown-menu">
                                         <button class="dropdown-item dropdownInput" target="#class" value="Barbarian" type="button">Barbarian</button>
                                         <button class="dropdown-item dropdownInput" target="#class" value="Bard" type="button">Bard</button>
@@ -123,7 +123,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="input-group-prepend col-4">
-                                            <span class="input-group-text col-4">
+                                            <span class="input-group-text text-light bg-dark col-4">
                                                 Player Name
                                             </span>
                                             <input id="playerName" type="text" class="form-control col-8" name="playerName" aria-describedby="playerName">
@@ -135,7 +135,7 @@
                                 <div class="container col-4">
                                     <div class="row">
                                         <div class="input-group-prepend col-6">
-                                            <span class="input-group-text col-6">
+                                            <span class="input-group-text text-light bg-dark col-6">
                                                 STR
                                             </span>
                                             <input id="str" type="text" class="form-control" name="str" aria-describedby="characterStr">
@@ -143,7 +143,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="input-group-prepend col-6">
-                                            <span class="input-group-text col-6">
+                                            <span class="input-group-text text-light bg-dark col-6">
                                                 DEX
                                             </span>
                                             <input id="dex" type="text" class="form-control" name="dex" aria-describedby="characterDex">
@@ -151,7 +151,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="input-group-prepend col-6">
-                                            <span class="input-group-text col-6">
+                                            <span class="input-group-text text-light bg-dark col-6">
                                                 CON
                                             </span>
                                             <input id="con" type="text" class="form-control" name="con" aria-describedby="characterCon">
@@ -159,7 +159,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="input-group-prepend col-6">
-                                            <span class="input-group-text col-6">
+                                            <span class="input-group-text text-light bg-dark col-6">
                                                 INT
                                             </span>
                                             <input id="int" type="text" class="form-control" name="int" aria-describedby="characterInt">
@@ -167,7 +167,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="input-group-prepend col-6">
-                                            <span class="input-group-text col-6">
+                                            <span class="input-group-text text-light bg-dark col-6">
                                                 WIS
                                             </span>
                                             <input id="wis" type="text" class="form-control" name="wis" aria-describedby="characterWis">
@@ -175,7 +175,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="input-group-prepend col-6">
-                                            <span class="input-group-text col-6">
+                                            <span class="input-group-text text-light bg-dark col-6">
                                                 CHA
                                             </span>
                                             <input id="cha" type="text" class="form-control" name="cha" aria-describedby="characterCha">
@@ -184,9 +184,9 @@
                                 </div>
                                 <div class="container col-4">
                                     <div class="row">
-                                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                                            Skill Proficiencies
-                                        </h6>
+                                        <div class="input-group-prepend">
+                                        <h6 class="input-group-prepend">Skill Proficiencies</h6>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-check col">
@@ -258,10 +258,30 @@
                                             <label class="form-check-label" for="survival">Survival</label>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="form-check col">
+                                            <input type="checkbox" class="form-check-input skillProf" name="sleightOfHand" id="sleightOfHand">
+                                            <label class="form-check-label" for="sleightOfHand">Sleight Of Hand</label>
+                                        </div>
+                                        <div class="form-check col">
+                                            <input type="checkbox" class="form-check-input skillProf" name="medicine" id="medicine">
+                                            <label class="form-check-label" for="medicine">Medicine</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-check col">
+                                            <input type="checkbox" class="form-check-input skillProf" name="perception" id="perception">
+                                            <label class="form-check-label" for="perception">Perception</label>
+                                        </div>
+                                        <div class="form-check col">
+                                            <input type="checkbox" class="form-check-input skillProf" name="investigation" id="investigation">
+                                            <label class="form-check-label" for="investigation">Investigation</label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="container col-4">
                                     <div class="row">
-                                        <button class="btn dropdown-toggle col-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Alignment</button>
+                                        <button class="btn dropdown-toggle btn-dark col-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Alignment</button>
                                         <div class="dropdown-menu">
                                             <button class="dropdown-item dropdownInput" target="#alignment" value="Lawful Good" type="button">Lawful Good</button>
                                             <button class="dropdown-item dropdownInput" target="#alignment" value="Neutral Good" type="button">Neutral Good</button>
@@ -277,7 +297,7 @@
                                     </div>
                                     <div class="container"><div class="row"><br></div></div>
                                     <div class="row">
-                                        <button class="btn dropdown-toggle col-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Background</button>
+                                        <button class="btn dropdown-toggle btn-dark col-4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Background</button>
                                         <div class="dropdown-menu">
                                             <button class="dropdown-item dropdownInput" target="#background" value="Acolyte" type="button">Acolyte</button>
                                             <button class="dropdown-item dropdownInput" target="#background" value="Anthropologist" type="button">Anthropologist</button>
@@ -312,9 +332,60 @@
                                         </div>
                                         <input id="background" type="text" class="form-control col-8" name="background" aria-describedby="characterBackground">
                                     </div>
+                                    <div class="container"><div class="row"><br></div></div>
+                                    <div class="row">
+                                        <div class="input-group-prepend col-6">
+                                            <span class="input-group-text text-light bg-dark col-6">
+                                                Armor
+                                            </span>
+                                            <input id="armor" type="text" class="form-control" name="armor" aria-describedby="characterArmor">
+                                        </div>
+                                        <div class="input-group-prepend col-6">
+                                            <span class="input-group-text text-light bg-dark col-6">
+                                                Health
+                                            </span>
+                                            <input id="health" type="text" class="form-control" name="health" aria-describedby="characterHealth">
+                                        </div>
+                                    </div>
+                                    <div class="container"><div class="row"><br></div></div>
+                                    <!--<div class="row">
+<div class="col">
+<div class="input-group-prepend col">
+<span class="input-group-text col">
+Add Equipment
+</span>
+<input id="addEquipment" type="text" class="form-control" name="addEquipment" aria-describedby="addEquipment">
+<button type="button" class="btn btn-xs btn-success" id="addEquipmentButton"><i class='material-icons'>add</i></button>
+</div>
+</div>
+</div>-->
+
+                                    <div class="container"><div class="row"><br></div></div>
+
+                                </div>
+                                <div class="container col-4">
+                                    <div class="row">
+                                    </div>
+                                </div>
+                                <div class="container col-4">
+                                    <div class="row">
+                                        <h4 class="">Equipment</h4>
+                                        <div class="navbar navbar-sm navbar-dark bg-dark">
+                                            <div class="input-group-prepend col">
+                                                <input id="addEquipment" type="text" class="form-control" name="addEquipment" aria-describedby="addEquipment" placeholder="Add Item">
+                                                <button type="button" class="btn btn-xs btn-dark" id="addEquipmentButton"><i class='material-icons'>add</i></button>
+                                            </div>
+                                        </div>
+                                        <ul class="list-group list-group-flush" id="equipment" name="equipment">
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="container col-4">
+                                    <div class="row">
+                                    </div>
                                 </div>
                                 <div class="container"><div class="row"><br></div></div>
-                                <button type ="submit" class="btn btn-primary" value="Save Character">Save</button>
+                                <button type ="submit" class="btn btn-dark" value="Save Character">Save</button>
                                 <button type="button" class="btn btn-danger" value="Delete Character" data-toggle="modal" data-target="#deleteModal">Delete</button>
                                 <div id="saveModal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="saveNotification" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-sm">

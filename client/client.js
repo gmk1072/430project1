@@ -1,4 +1,4 @@
-
+//will parse the jsonif it is supposed to(determined in handle response function)
 const parseJSON = (xhr,e) => {
     if(xhr.response){
         const obj = JSON.parse(xhr.response);
@@ -7,8 +7,10 @@ const parseJSON = (xhr,e) => {
         const p = document.createElement('p');
         p.textContent = `Message: ${obj.message}`;
         content.appendChild(p);
-    }*/
+        }*/
 
+        //adds the character buttons so you can click them and do a get request with the
+        //character name as part of the query to show that characters data
         if(obj.characters) {
             const charachterList = document.querySelector("#characterList");
             const characters = obj.characters;
@@ -30,11 +32,13 @@ const parseJSON = (xhr,e) => {
                 charachterList.appendChild(li);
             }
         }
+        //goes through the id on the json object
         if(obj.id) {
             switch(obj.id) {
                 case "showCharacter": {
+                    //in the case of the showcharacter id it will fill all of the
+                    //fields with the information for that character
                     document.querySelector("#deleteCharacter").action = `/deleteCharacter?name=${obj.name}`;
-                    console.log(document.querySelector("#deleteCharacter").action);
                     document.querySelector("#name").value = obj.name;
                     document.querySelector("#race").value = obj.race===undefined?'':obj.race;
                     document.querySelector("#class").value = obj.class===undefined?'':obj.class;
@@ -59,13 +63,34 @@ const parseJSON = (xhr,e) => {
                     document.getElementById("religion").checked = obj.religion==='true'?true:false;
                     document.getElementById("stealth").checked = obj.stealth==='true'?true:false;
                     document.getElementById("survival").checked = obj.survival==='true'?true:false;
+                    document.getElementById("sleightOfHand").checked = obj.sleightOfHand==='true'?true:false;
+                    document.getElementById("medicine").checked = obj.medicine==='true'?true:false;
+                    document.getElementById("perception").checked = obj.perception==='true'?true:false;
+                    document.getElementById("investigation").checked = obj.investigation==='true'?true:false;
+
 
                     document.querySelector("#alignment").value = obj.alignment==undefined?'':obj.alignment;
                     document.querySelector("#background").value = obj.background==undefined?'':obj.background;
                     document.querySelector("#playerName").value = obj.playerName===undefined?'':obj.playerName;
+                    document.querySelector("#armor").value = obj.armor===undefined?'':obj.armor;
+                    document.querySelector("#health").value = obj.health===undefined?'':obj.health;
+                    const equiplist = document.querySelector("#equipment");
+                    while (equiplist.firstChild) {
+                        equiplist.removeChild(equiplist.firstChild);
+                    }
+                    if(Array.isArray(obj.equipment)) {
+                        for(var i = 0; i<obj.equipment.length;i++) {
+                            addEquipmentName(obj.equipment[i]);
+                        }
+                    } else if(obj.equipment!='') {
+                        addEquipmentName(obj.equipment);
+                    }
+
                     break;
                 }
                 case "deleteCharacter": {
+                    //will show the delete character modal if it was attempted, will refresh the character
+                    //list after and clear the fields of that old characters information
                     const modal = document.querySelector("#deleteModal");
                     $('#deleteModal').modal("hide");
                     const refreshList = document.querySelector("#refreshCharacterListForm");
@@ -79,6 +104,7 @@ const parseJSON = (xhr,e) => {
     }
 };
 
+//this just clears all the fields back to their original setting
 const resetFields = () => {
     document.querySelector("#name").value = '';
     document.querySelector("#race").value = '';
@@ -104,15 +130,28 @@ const resetFields = () => {
     document.getElementById("religion").checked = false;
     document.getElementById("stealth").checked = false;
     document.getElementById("survival").checked = false;
+    document.getElementById("sleightOfHand").checked = false;
+    document.getElementById("medicine").checked = false;
+    document.getElementById("perception").checked = false;
+    document.getElementById("investigation").checked = false;
+
 
     document.querySelector("#alignment").value = '';
     document.querySelector("#background").value = '';
     document.querySelector("#playerName").value = '';
+    document.querySelector("#armor").value = '';
+    document.querySelector("#health").value = '';
+    const equiplist = document.querySelector("#equipment");
+    while (equiplist.firstChild) {
+        equiplist.removeChild(equiplist.firstChild);
+    }
+    document.querySelector("#addEquipment").value = '';
 };
 
+//will show a modal with the message from the response
 const handleResponse = (xhr, parseResponse, e) => {
     var statusCode = document.querySelector("#statusCode");
-    statusCode.innerHTML = xhr.status;
+    statusCode.innerHTML = xhr.status;//sets the status code indicator on the top right of the screen
     switch(xhr.status) {
         case 200:
             break;
@@ -124,7 +163,7 @@ const handleResponse = (xhr, parseResponse, e) => {
             break;
         case 304:
             var modal = document.querySelector("#statusModal");
-            document.querySelector('#statusContent').innerHTML = "No modifications";
+            document.querySelector('#statusContent').innerHTML = "No Modifications";
             $('#statusModal').modal("show");
             break;
         case 400:
@@ -137,13 +176,22 @@ const handleResponse = (xhr, parseResponse, e) => {
             document.querySelector('#statusContent').innerHTML = "Page not found";
             $('#statusModal').modal("show");
             break;
+        case 500:
+            var modal = document.querySelector("#statusModal");
+            document.querySelector('#statusContent').innerHTML = "Internal Server Error! Uh oh";
+            $('#statusModal').modal("show");
+            break;
         default:
-            content.innerHTML = `Error code not implemented by client`;
+            var modal = document.querySelector("#statusModal");
+            document.querySelector('#statusContent').innerHTML = "No modifications";
+            $('#statusModal').modal("show");
+            break;
     }
     if (parseResponse) {
         parseJSON(xhr, e);
     }
 };
+//sends the get requests back to the api
 const requestUpdate = (e, characterForm) =>{
     const url = characterForm.getAttribute('action');
     const method = characterForm.getAttribute('method');
@@ -161,10 +209,12 @@ const requestUpdate = (e, characterForm) =>{
 
     xhr.send();
 
+
     e.preventDefault();
     return false;
 };
 
+//sends the post requests back to the api
 const sendPost = (e, nameForm) => {
     const nameAction = nameForm.getAttribute('action');
     const nameMethod = nameForm.getAttribute('method');
@@ -189,10 +239,15 @@ const sendPost = (e, nameForm) => {
     }
     xhr.send(formData);
 
+    const refreshList = document.querySelector("#refreshCharacterListForm");
+    var event = new Event('submit', {});
+    refreshList.dispatchEvent(event);
+
     e.preventDefault();
     return false;
 };
 
+//sends deletes back to the api
 const sendDelete = (e, deleteForm) => {
     const deleteAction = deleteForm.getAttribute('action');
     const deleteMethod = deleteForm.getAttribute('method');
@@ -207,6 +262,34 @@ const sendDelete = (e, deleteForm) => {
     return false;
 }
 
+//this is for making the equipment list
+//it will add an input and button to a div, which then appends to
+//the list element, which goes into the list
+function addEquipmentName(name) {
+    const equiplist = document.querySelector("#equipment");
+    let listel = document.createElement("li");
+    listel.className = "list-group-item flex";
+    //listel.textContent = document.querySelector("#addEquipment").value;
+    let input = document.createElement("input");
+    input.type = "text";
+    input.name = "equipment";
+    input.value= name;
+    input.textContent=name;
+    //listel.appendChild(input);
+    let button = document.createElement("button");
+    button.className = "btn btn-xs btn-danger";
+    button.innerHTML = "<i class='material-icons'>clear</i>";
+    button.onclick = () => {
+        equiplist.removeChild(listel);
+    }
+    let div = document.createElement("div");
+    div.className = "input-group-prepend col";
+    div.appendChild(input);
+    div.appendChild(button);
+
+    listel.appendChild(div);
+    equiplist.appendChild(listel);
+}
 const init = () => {
 
     const characterForm = document.querySelector("#refreshCharacterListForm");
@@ -224,6 +307,31 @@ const init = () => {
     const deleteForm = document.querySelector("#deleteCharacter");
     const deleteCharacter = (e) => sendDelete(e, deleteForm);
     deleteForm.addEventListener('submit', deleteCharacter);
+
+    const equipButton = document.querySelector("#addEquipmentButton");
+    const addEquip =()=> {
+        addEquipmentName(document.querySelector("#addEquipment").value);
+        /*const equiplist = document.querySelector("#equipment");
+        let listel = document.createElement("li");
+        listel.className = "list-group-item flex";
+        //listel.textContent = document.querySelector("#addEquipment").value;
+        let input = document.createElement("input");
+        input.type = "text";
+        input.name = "equipment";
+        input.value= document.querySelector("#addEquipment").value;
+        input.textContent=document.querySelector("#addEquipment").value;
+        listel.appendChild(input);
+        let button = document.createElement("button");
+        button.className = "btn btn-xs btn-danger";
+        button.innerHTML = "<i class='material-icons'>clear</i>";
+        button.onclick = () => {
+            equiplist.removeChild(listel);
+        }
+        listel.appendChild(button);
+        equiplist.appendChild(listel);*/
+        document.querySelector("#addEquipment").value = '';
+    };
+    equipButton.addEventListener('click', addEquip);
 
     const dropdownInputs = document.querySelectorAll(".dropdownInput");
     for(var dropdown of dropdownInputs) {

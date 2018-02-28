@@ -77,16 +77,27 @@ const addCharacter = (request, response, body) => {
   characters[body.name].deception = body.deception === undefined ? false : body.deception;
   characters[body.name].history = body.history === undefined ? false : body.history;
   characters[body.name].insight = body.insight === undefined ? false : body.insight;
-  characters[body.name].intimidation = body.intimidation === undefined ? false : body.intimidation;
+  const intim = body.intimidation;
+  characters[body.name].intimidation = intim === undefined ? false : intim;
   characters[body.name].nature = body.nature === undefined ? false : body.nature;
   characters[body.name].performance = body.performance === undefined ? false : body.performance;
   characters[body.name].persuasion = body.persuasion === undefined ? false : body.persuasion;
   characters[body.name].religion = body.religion === undefined ? false : body.religion;
   characters[body.name].stealth = body.stealth === undefined ? false : body.stealth;
   characters[body.name].survival = body.survival === undefined ? false : body.survival;
+  const soh = body.sleightOfHand;
+  characters[body.name].sleightOfHand = soh === undefined ? false : soh;
+  characters[body.name].medicine = body.medicine === undefined ? false : body.medicine;
+  characters[body.name].perception = body.perception === undefined ? false : body.perception;
+  const inv = body.investigation;
+  characters[body.name].investigation = inv === undefined ? false : inv;
+
   characters[body.name].alignment = body.alignment === undefined ? '' : body.alignment;
   characters[body.name].background = body.background === undefined ? '' : body.background;
   characters[body.name].playerName = body.playerName === undefined ? '' : body.playerName;
+  characters[body.name].armor = body.armor === undefined ? '' : body.armor;
+  characters[body.name].health = body.health === undefined ? '' : body.health;
+  characters[body.name].equipment = body.equipment === undefined ? '' : body.equipment;
   // characters[body.name].age = body.age;
 
   if (responseCode === 201) {
@@ -123,9 +134,16 @@ const showCharacter = (request, response, params) => {
     religion: characters[params.name].religion,
     stealth: characters[params.name].stealth,
     survival: characters[params.name].survival,
+    sleightOfHand: characters[params.name].sleightOfHand,
+    medicine: characters[params.name].medicine,
+    perception: characters[params.name].perception,
+    investigation: characters[params.name].investigation,
     alignment: characters[params.name].alignment,
     background: characters[params.name].background,
     playerName: characters[params.name].playerName,
+    armor: characters[params.name].armor,
+    health: characters[params.name].health,
+    equipment: characters[params.name].equipment,
   };
   return respondJSON(request, response, 200, responseJSON);
 };
@@ -138,34 +156,51 @@ const saveCharacter = (request, response, body) => {
     responseJSON.id = 'missingParams';
     return respondJSON(request, response, 400, responseJSON);
   }
+  try {
+    characters[body.name].name = body.name;
+    characters[body.name].race = body.race === undefined ? '' : body.race;
+    characters[body.name].class = body.class === undefined ? '' : body.class;
+    characters[body.name].str = body.str === undefined ? '' : body.str;
+    characters[body.name].dex = body.dex === undefined ? '' : body.dex;
+    characters[body.name].con = body.con === undefined ? '' : body.con;
+    characters[body.name].int = body.int === undefined ? '' : body.int;
+    characters[body.name].wis = body.wis === undefined ? '' : body.wis;
+    characters[body.name].cha = body.cha === undefined ? '' : body.cha;
+    characters[body.name].acrobatics = body.acrobatics === undefined ? false : body.acrobatics;
+    const ah = body.animalHandling;
+    characters[body.name].animalHandling = ah === undefined ? false : ah;
+    characters[body.name].arcana = body.arcana === undefined ? false : body.arcana;
+    characters[body.name].athletics = body.athletics === undefined ? false : body.athletics;
+    characters[body.name].deception = body.deception === undefined ? false : body.deception;
+    characters[body.name].history = body.history === undefined ? false : body.history;
+    characters[body.name].insight = body.insight === undefined ? false : body.insight;
+    const intim = body.intimidation;
+    characters[body.name].intimidation = intim === undefined ? false : intim;
+    characters[body.name].nature = body.nature === undefined ? false : body.nature;
+    characters[body.name].performance = body.performance === undefined ? false : body.performance;
+    characters[body.name].persuasion = body.persuasion === undefined ? false : body.persuasion;
+    characters[body.name].religion = body.religion === undefined ? false : body.religion;
+    characters[body.name].stealth = body.stealth === undefined ? false : body.stealth;
+    characters[body.name].survival = body.survival === undefined ? false : body.survival;
+    const soh = body.sleightOfHand;
+    characters[body.name].sleightOfHand = soh === undefined ? false : soh;
+    characters[body.name].medicine = body.medicine === undefined ? false : body.medicine;
+    characters[body.name].perception = body.perception === undefined ? false : body.perception;
+    const inv = body.investigation;
+    characters[body.name].investigation = inv === undefined ? false : inv;
 
-  characters[body.name].name = body.name;
-  characters[body.name].race = body.race === undefined ? '' : body.race;
-  characters[body.name].class = body.class === undefined ? '' : body.class;
-  characters[body.name].str = body.str === undefined ? '' : body.str;
-  characters[body.name].dex = body.dex === undefined ? '' : body.dex;
-  characters[body.name].con = body.con === undefined ? '' : body.con;
-  characters[body.name].int = body.int === undefined ? '' : body.int;
-  characters[body.name].wis = body.wis === undefined ? '' : body.wis;
-  characters[body.name].cha = body.cha === undefined ? '' : body.cha;
-  characters[body.name].acrobatics = body.acrobatics === undefined ? false : body.acrobatics;
-  const ah = body.animalHandling;
-  characters[body.name].animalHandling = ah === undefined ? false : ah;
-  characters[body.name].arcana = body.arcana === undefined ? false : body.arcana;
-  characters[body.name].athletics = body.athletics === undefined ? false : body.athletics;
-  characters[body.name].deception = body.deception === undefined ? false : body.deception;
-  characters[body.name].history = body.history === undefined ? false : body.history;
-  characters[body.name].insight = body.insight === undefined ? false : body.insight;
-  characters[body.name].intimidation = body.intimidation === undefined ? false : body.intimidation;
-  characters[body.name].nature = body.nature === undefined ? false : body.nature;
-  characters[body.name].performance = body.performance === undefined ? false : body.performance;
-  characters[body.name].persuasion = body.persuasion === undefined ? false : body.persuasion;
-  characters[body.name].religion = body.religion === undefined ? false : body.religion;
-  characters[body.name].stealth = body.stealth === undefined ? false : body.stealth;
-  characters[body.name].survival = body.survival === undefined ? false : body.survival;
-  characters[body.name].alignment = body.alignment === undefined ? '' : body.alignment;
-  characters[body.name].background = body.background === undefined ? '' : body.background;
-  characters[body.name].playerName = body.playerName === undefined ? '' : body.playerName;
+
+    characters[body.name].alignment = body.alignment === undefined ? '' : body.alignment;
+    characters[body.name].background = body.background === undefined ? '' : body.background;
+    characters[body.name].playerName = body.playerName === undefined ? '' : body.playerName;
+    characters[body.name].armor = body.armor === undefined ? '' : body.armor;
+    characters[body.name].health = body.health === undefined ? '' : body.health;
+    characters[body.name].equipment = body.equipment === undefined ? '' : body.equipment;
+  } catch (error) {
+    responseJSON.message = 'something bad happened';
+    responseJSON.id = 'serverError';
+    return respondJSON(request, response, 500, responseJSON);
+  }
 
   return respondJSONMeta(request, response, 204);
 };
